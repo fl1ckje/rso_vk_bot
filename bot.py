@@ -89,7 +89,7 @@ def get_user_data_from_database(user_id):
     if user_data is None:
         user_data = create_user_data_in_database(user_id, 0)
     else:
-        print('[БД] Найден существующий пользователь:\nID: %s\nСостояние: %s\nТаймаут: %s' % (
+        # print('[БД] Найден существующий пользователь:\nID: %s\nСостояние: %s\nТаймаут: %s' % (
             user_id, user_data[0], user_data[1]))
     return user_data
 
@@ -97,7 +97,7 @@ def get_user_data_from_database(user_id):
 # Изменение данных пользователя
 def set_user_data_in_database(user_id, user_data):
     cursor.execute('UPDATE users SET user_state = ? WHERE user_id = ?', (user_data[0], user_id,))
-    print('[БД] Изменен пользователь:\nID: %s\nСостояние: %s' % (user_id, user_data[0]))
+    # print('[БД] Изменен пользователь:\nID: %s\nСостояние: %s' % (user_id, user_data[0]))
     connection.commit()
 
 
@@ -218,11 +218,11 @@ def main(timer):
         if event.type == VkEventType.MESSAGE_NEW:
             if not event.from_me and event.from_user:
                 user_data = get_user_data_from_database(event.user_id)
-                print('[Бот] Получено сообщение от пользователя:\nID: %s\nТекст: %s\nСостояние: %s'
+                # print('[Бот] Получено сообщение от пользователя:\nID: %s\nТекст: %s\nСостояние: %s'
                       % (event.user_id, event.message, user_data[0]))
                 # USER_STATE = 0
                 if user_data[0] == 0:
-                    if event.text == 'Начать':
+                    if event.text == 'Начать' or event.text == 'начать' or event.text == 'НАЧАТЬ':
                         vk.messages.send(user_id=event.user_id, message='Привет! Хочешь аватарку в стиле «Дня РСО»?', keyboard=vk_keyboard_1.get_keyboard(), random_id=rand())
                         set_user_data_in_database(user_id=event.user_id, user_data=(1,))
                     else:
@@ -254,7 +254,7 @@ def main(timer):
                 # USER_STATE = 3
                 elif user_data[0] == 3:
                     if event.attachments:
-                        print('Получено сообщение с медиа вложением.\nID:{}\nТип вложения:\n{}'.format(event.user_id, event.attachments['attach1_type']))
+                        # print('Получено сообщение с медиа вложением.\nID:{}\nТип вложения:\n{}'.format(event.user_id, event.attachments['attach1_type']))
                         if event.attachments['attach1_type'] == 'photo':
                             if len(vk.messages.getById(message_ids=event.message_id)['items'][0]['attachments']) > 1:
                                 vk.messages.send(user_id=event.user_id,
