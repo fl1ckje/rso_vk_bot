@@ -15,11 +15,10 @@
 - Убедитесь в том, что интерпретатор добавлен в PATH;
 - Клонируйте или загрузите этот репозиторий.
 
-> update and install this package first
+> Установите все зависимости
 
-```python
-$ brew update
-$ brew install fvcproductions
+```cmd
+pip3 install -r requirements.txt
 ```
 
 > now install npm and bower packages
