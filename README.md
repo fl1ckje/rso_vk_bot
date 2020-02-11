@@ -10,7 +10,6 @@
 ## Содержание
 
 - [Установка](#Установка)
-- [Установка зависимостей](#Установка зависимостей)
 - [Лицензия](#Лицензия)
 
 ---
@@ -32,12 +31,8 @@ let generateProject = project => {
 
 ## Установка
 
-- All the `code` required to get started
-- Images of what it should look like
-
-### Установка зависимостей
-
-- If you want more syntax highlighting, format your code like this:
+- Убедитесь, что у вас установлен интерпретатор Python версии 3.7 или новее
+- Убедитесь в том, что интерпретатор добавлен в PATH.
 
 > update and install this package first
 
