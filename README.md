@@ -13,12 +13,12 @@
 
 - Убедитесь, что у вас установлен интерпретатор Python версии 3.7 или новее;
 - Убедитесь в том, что интерпретатор добавлен в PATH;
-- Клонируйте или загрузите этот репозиторий.
+- Клонируйте или загрузите этот репозиторий;
 - Не забудьте заменить ресурсы (в папках examples и frames, но с теми же именами файлов и их расширениями). Например: Вожатый.png => Вожатый.png
 
 > Установите все зависимости
 
-```cmd
+```
 pip3 install -r requirements.txt
 ```
 
@@ -30,6 +30,30 @@ pip3 install -r requirements.txt
 
 > config.ini будет выглядеть так:
 
+```
+[Group bot config]
+group_token = value
+group_id = value
+api_ver = value
+wait_time = value
+img_format = value
+database_update_time = value
+vertical_frame_offset = value
+```
+
+>Значения прописываются без ковычек и скобок.
+>Пример правильного файла конфигурации:
+
+```
+[Group bot config]
+group_token = value
+group_id = value
+api_ver = value
+wait_time = value
+img_format = value
+database_update_time = value
+vertical_frame_offset = value
+```
 
 ---
 
