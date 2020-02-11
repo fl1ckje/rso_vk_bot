@@ -83,7 +83,7 @@ python bot.py
 
 ## Обратная связь и пожертвования (при желании)
 
-<a href="vk.com/fl1ckje" target="_blank">`Мой профиль ВКонтакте`</a>
+<a href="http://vk.com/fl1ckje" target="_blank">`Мой профиль ВКонтакте`</a>
 
 ---
 
