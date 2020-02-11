@@ -5,7 +5,7 @@
 
 > Синхронный LongPoll
 
-> Работает в обёртке vk_api
+> Работает в обёртке vk_api(https://github.com/python273/vk_api)
 
 ## Содержание
 
