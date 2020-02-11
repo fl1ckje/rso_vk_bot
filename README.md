@@ -1,14 +1,13 @@
-# Repository Title Goes Here
+РСО VK Бот [![PyPI]![Python 3.7](https://img.shields.io/pypi/pyversions/vk_api.svg)
+========================================================================================================================================
 
-> Subtitle or Short Description Goes Here
+> Вставляет в изображения рамки в честь дня РСО.
 
-> ideally one sentence
+> Синхронный LongPoll
 
-> include terms/tags that can be searched
+> Работает в обёртке vk_api
 
-[![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://travis-ci.org/badges/badgerbadgerbadger)
-
-## Table of Contents (Optional)
+## Содержание
 
 - [Installation](#Установка)
 - [License](#Лицензия)
@@ -35,10 +34,6 @@ let generateProject = project => {
 
 - All the `code` required to get started
 - Images of what it should look like
-
-### Clone
-
-- Clone this repo to your local machine using `https://github.com/fvcproductions/SOMEREPO`
 
 ### Setup
 
