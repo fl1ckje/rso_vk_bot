@@ -22,14 +22,14 @@
 
 > update and install this package first
 
-```shell
+```python
 $ brew update
 $ brew install fvcproductions
 ```
 
 > now install npm and bower packages
 
-```text.python.console
+```python
 $ def lol()
 $ bower install
 ```
