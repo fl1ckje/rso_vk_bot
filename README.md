@@ -10,8 +10,8 @@
 
 ## Table of Contents (Optional)
 
-- [Installation](#installation)
-- [License](#license)
+- [Installation](#Установка)
+- [License](#Лицензия)
 
 
 ---
@@ -31,7 +31,7 @@ let generateProject = project => {
 
 ---
 
-## Installation
+## Установка
 
 - All the `code` required to get started
 - Images of what it should look like
@@ -53,7 +53,7 @@ $ brew install fvcproductions
 
 > now install npm and bower packages
 
-```shell
+```text.python.console
 $ npm install
 $ bower install
 ```
@@ -62,7 +62,7 @@ $ bower install
 
 ---
 
-## Пожертвования (при желании)
+## Обратная связь и пожертвования (при желании)
 
 VKPay:
 vk.com/fl1ckje
