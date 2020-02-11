@@ -226,7 +226,7 @@ def main(timer):
                         vk.messages.send(user_id=event.user_id, message='Привет! Хочешь аватарку в стиле «Дня РСО»?', keyboard=vk_keyboard_1.get_keyboard(), random_id=rand())
                         set_user_data_in_database(user_id=event.user_id, user_data=(1,))
                     else:
-                        vk.messages.send(user_id=event.user_id, message='Напиши или нажми кнопку «Начать», чтобы начать переписку со мной.', random_id=rand())
+                        vk.messages.send(user_id=event.user_id, message='Напиши или нажми кнопку «Начать», чтобы начать переписку со мной.', keyboard=vk_keyboard_0.get_keyboard(), random_id=rand())
                 # USER_STATE = 1
                 elif user_data[0] == 1:
                     if event.text == 'Да, конечно!':
