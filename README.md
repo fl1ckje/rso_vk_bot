@@ -3,15 +3,15 @@
 
 > Вставляет в изображения рамки в честь дня РСО.
 
-> Синхронный LongPoll
+> До безобразия простой Синхронный LongPoll
 
-> Работает в обёртке vk_api(https://github.com/python273/vk_api)
+> [Работает в обёртке vk_api](https://github.com/python273/vk_api)
 
 ## Содержание
 
-- [Installation](#Установка)
-- [License](#Лицензия)
-
+- [Установка](#Установка)
+- [Установка зависимостей](#Установка зависимостей)
+- [Лицензия](#Лицензия)
 
 ---
 
@@ -35,7 +35,7 @@ let generateProject = project => {
 - All the `code` required to get started
 - Images of what it should look like
 
-### Setup
+### Установка зависимостей
 
 - If you want more syntax highlighting, format your code like this:
 
@@ -53,14 +53,11 @@ $ npm install
 $ bower install
 ```
 
-- For all the possible languages that support syntax highlithing on GitHub (which is basically all of them), refer <a href="https://github.com/github/linguist/blob/master/lib/linguist/languages.yml" target="_blank">here</a>.
-
 ---
 
 ## Обратная связь и пожертвования (при желании)
 
-VKPay:
-vk.com/fl1ckje
+[VK](vk.com/fl1ckje)
 
 ---
 
