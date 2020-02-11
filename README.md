@@ -5,7 +5,7 @@
 
 > До безобразия простой Синхронный LongPoll
 
-> [Работает в обёртке vk_api](https://github.com/python273/vk_api)
+> Работает в обёртке [vk_api](https://github.com/python273/vk_api)
 
 ## Содержание
 
@@ -14,25 +14,11 @@
 
 ---
 
-## Example (Optional)
-
-```javascript
-// code away!
-
-let generateProject = project => {
-  let code = [];
-  for (let js = 0; js < project.length; js++) {
-    code.push(js);
-  }
-};
-```
-
----
-
 ## Установка
 
-- Убедитесь, что у вас установлен интерпретатор Python версии 3.7 или новее
-- Убедитесь в том, что интерпретатор добавлен в PATH.
+- Убедитесь, что у вас установлен интерпретатор Python версии 3.7 или новее;
+- Убедитесь в том, что интерпретатор добавлен в PATH;
+- Клонируйте или загрузите этот репозиторий.
 
 > update and install this package first
 
@@ -44,7 +30,7 @@ $ brew install fvcproductions
 > now install npm and bower packages
 
 ```text.python.console
-$ npm install
+$ def lol()
 $ bower install
 ```
 
@@ -52,7 +38,7 @@ $ bower install
 
 ## Обратная связь и пожертвования (при желании)
 
-[VK](vk.com/fl1ckje)
+[Мой профиль ВКонтакте](vk.com/fl1ckje)
 
 ---
 
