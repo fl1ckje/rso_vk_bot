@@ -57,7 +57,7 @@ api_ver = 5.92
 wait_time = 25
 img_format = png
 database_update_time = 3600
-vertical_frame_offset = 94
+vertical_frame_offset = 246
 ```
 
 Легенда:
