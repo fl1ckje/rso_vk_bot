@@ -21,7 +21,6 @@ def create_config(path, name):
     config.set(name, 'wait_time', 'value')
     config.set(name, 'img_format', 'value')
     config.set(name, 'database_update_time', 'value')
-    config.set(name, 'vertical_frame_offset', 'value')
     with open(path, 'w') as config_file:
         config.write(config_file)
 
@@ -133,27 +132,23 @@ def process_photo(event):
     frame = Image.open('frames/' + event.text + '.' + img_format, 'r')
     original = original.convert('RGBA')
     frame = frame.convert('RGBA')
-    # изменение размеров фото и рамки в зависимости от размера фото
     new_original_size, new_frame_size = (), ()
-    if original.size[0] > frame.size[0]:
+    if original.size[0] >= frame.size[0] and original.size[1] >= frame.size[1]:
         new_original_size = (frame.size[0], int(frame.size[0] * original.size[1] / original.size[0]))
-        new_frame_size = frame.size
         original = original.resize(new_original_size, Image.BICUBIC)
-    elif original.size[0] == frame.size[0]:
-        new_original_size = original.size
-        new_frame_size = frame.size
-    elif original.size[0] < frame.size[0]:
-        new_original_size = original.size
+    elif original.size[0] < frame.size[0] and (original.size[1] >= frame.size[1] or original.size[1] < frame.size[1]):
         new_frame_size = (original.size[0], int(original.size[0] * frame.size[1] / frame.size[0]))
         frame = frame.resize(new_frame_size, Image.BICUBIC)
-    # смещение фото и рамки
-    original_offset = (0, 0)
-    frame_offset = (0, new_original_size[1] - vertical_frame_offset)
+        left = (original.size[0] - frame.size[0]) // 2
+        top = (original.size[1] - frame.size[1]) // 2
+        right = (original.size[0] + frame.size[0]) // 2
+        bottom = (original.size[1] + frame.size[1]) // 2
+        original = original.crop((left, top, right, bottom))
     # общее изображение для фото и рамки
-    new_image_size = (new_original_size[0], new_original_size[1] + new_frame_size[1] - vertical_frame_offset)
-    new_image = Image.new('RGBA', new_image_size, (255, 255, 255, 0))
-    new_image.paste(original, original_offset)
-    new_image.paste(frame, frame_offset, mask=frame)
+    # noinspection PyUnboundLocalVariable
+    new_image = Image.new('RGBA', (frame.size[0], frame.size[1]), (255, 255, 255, 255))
+    new_image.paste(original, (0, 0))
+    new_image.paste(frame, (0, 0), mask=frame)
     new_image.save('edited/' + str(event.user_id) + '.' + img_format)
     original.close()
     frame.close()
@@ -254,7 +249,7 @@ def main(timer):
                 elif user_data[0] == 3:
                     if event.attachments:
                         print('Получено сообщение с медиа вложением.\nID:{}\nТип вложения:\n{}'.format(event.user_id, event.attachments['attach1_type']))
-                        if event.attachments['attach1_type'] == 'photo':
+                        if event.attachments['attach1_type'] == 'photo' or (event.attachments['attach1_type'] == 'doc' and vk.messages.getById(message_ids=event.message_id)['items'][0]['attachments'][0]['doc']['type'] == 4):
                             if len(vk.messages.getById(message_ids=event.message_id)['items'][0]['attachments']) > 1:
                                 vk.messages.send(user_id=event.user_id,
                                                  message='Ты отправил(а) мне несколько фото. Я возьму первое из них.',
@@ -263,7 +258,11 @@ def main(timer):
                             # photo_size = (int(message['items'][0]['attachments'][0]['photo']['sizes'][4]['width']),
                             #               int(message['items'][0]['attachments'][0]['photo']['sizes'][4]['height']))
                             # print('Размер фото (ширина, высота):\n' + str(photo_size))
-                            photo_url = message['items'][0]['attachments'][0]['photo']['sizes'][4]['url']
+                            photo_url = ''
+                            if event.attachments['attach1_type'] == 'photo':
+                                photo_url = message['items'][0]['attachments'][0]['photo']['sizes'][4]['url']
+                            elif event.attachments['attach1_type'] == 'doc':
+                                photo_url = message['items'][0]['attachments'][0]['doc']['url']
                             photo_path = 'downloads/' + str(event.user_id) + '.' + img_format
                             urlretrieve(photo_url, photo_path)
                             original = Image.open(photo_path)
@@ -281,7 +280,7 @@ def main(timer):
                                                  message='Фотография была успешно загружена! Осталось выбрать, какую фоторамку использовать.',
                                                  keyboard=vk_keyboard_4.get_keyboard(), random_id=rand())
                                 set_user_data_in_database(user_id=event.user_id, user_data=(4,))
-                        elif not (event.attachments['attach1_type'] == 'photo'):
+                        elif event.attachments['attach1_type'] != 'photo' or (event.attachments['attach1_type'] != 'doc' and vk.messages.getById(message_ids=event.message_id)['items'][0]['attachments'][0]['doc']['type'] != 4):
                             vk.messages.send(user_id=event.user_id,
                                              message='Ты отправил(а) мне что-то другое. Отправь мне фото.',
                                              random_id=rand())
@@ -323,7 +322,6 @@ if __name__ == '__main__':
     wait_time = int(get_setting(cfg_path, cfg_name, 'wait_time'))
     img_format = get_setting(cfg_path, cfg_name, 'img_format')
     database_update_time = int(get_setting(cfg_path, cfg_name, 'database_update_time'))
-    vertical_frame_offset = int(get_setting(cfg_path, cfg_name, 'vertical_frame_offset'))
     print('[Бот] Файл конфигурации загружен успешно.')
     connection, cursor = get_database('users_states.db')
     while True:
