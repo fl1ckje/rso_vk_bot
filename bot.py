@@ -5,11 +5,13 @@ import sqlite3
 import time
 import datetime
 import vk_api
+import ssl
 from vk_api import VkUpload
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 from vk_api.longpoll import VkLongPoll, VkEventType
-from urllib.request import urlretrieve
+import urllib.request
 from PIL import Image
+
 
 
 def create_config(path, name):
@@ -217,7 +219,7 @@ def main(timer):
                 # USER_STATE = 0
                 if user_data[0] == 0:
                     if event.text == 'Начать' or event.text == 'начать' or event.text == 'НАЧАТЬ':
-                        vk.messages.send(user_id=event.user_id, message='Привет! Хочешь аватарку в стиле «Дня РСО»?', keyboard=vk_keyboard_1.get_keyboard(), random_id=rand())
+                        vk.messages.send(user_id=event.user_id, message='Привет! Хочешь аватарку в стиле «Дня РСО»?\nЕсли бот не отвечает более 5 минут, то это означает, что он под большой нагрузкой. В таком случае стоит написать на минуту позже. Если бот не работает вообще, немедленно сообщите @fl1ckje (мне):)', keyboard=vk_keyboard_1.get_keyboard(), random_id=rand())
                         set_user_data_in_database(user_id=event.user_id, user_data=(1,))
                     else:
                         vk.messages.send(user_id=event.user_id, message='Напиши или нажми кнопку «Начать», чтобы начать переписку со мной.', keyboard=vk_keyboard_0.get_keyboard(), random_id=rand())
@@ -227,7 +229,7 @@ def main(timer):
                         vk.messages.send(user_id=event.user_id, message=entry_advice, keyboard=vk_keyboard_2.get_keyboard(), random_id=rand())
                         set_user_data_in_database(user_id=event.user_id, user_data=(2,))
                     else:
-                        vk.messages.send(user_id=event.user_id, message='Нажми кнопку «Да, конечно!», чтобы продолжить.', random_id=rand())
+                        vk.messages.send(user_id=event.user_id, message='Нажми кнопку «Да, конечно!», чтобы продолжить. Используй кнопки клавиатуры Вконтакте, чтобы взаимодействовать со мной. Такая клавиатура доступна в официальном мобильном приложении Вконтакте, а также в полной версии сайта.', random_id=rand())
                 # USER_STATE = 2
                 elif user_data[0] == 2:
                     if event.text in professions1 or event.text in professions2 or event.text in commons:
@@ -244,7 +246,7 @@ def main(timer):
                     elif event.attachments:
                         vk.messages.send(user_id=event.user_id, message='Не торопись. Сначала нажми кнопку «Хочу себе аватарку!🔥»', random_id=rand())
                     else:
-                        vk.messages.send(user_id=event.user_id, message='Используй кнопки клавиатуры, чтобы взаимодействовать со мной.', random_id=rand())
+                        vk.messages.send(user_id=event.user_id, message='Используй кнопки клавиатуры Вконтакте, чтобы взаимодействовать со мной. Такая клавиатура доступна в официальном мобильном приложении Вконтакте, а также в полной версии сайта.', random_id=rand())
                 # USER_STATE = 3
                 elif user_data[0] == 3:
                     if event.attachments:
@@ -264,7 +266,7 @@ def main(timer):
                             elif event.attachments['attach1_type'] == 'doc':
                                 photo_url = message['items'][0]['attachments'][0]['doc']['url']
                             photo_path = 'downloads/' + str(event.user_id) + '.' + img_format
-                            urlretrieve(photo_url, photo_path)
+                            urllib.request.urlretrieve(photo_url, photo_path)
                             original = Image.open(photo_path)
                             if original.size[1] <= original.size[0]:
                                 original.close()
@@ -299,7 +301,7 @@ def main(timer):
                         vk.messages.send(user_id=event.user_id, message=entry_advice, keyboard=vk_keyboard_2.get_keyboard(), random_id=rand())
                         set_user_data_in_database(user_id=event.user_id, user_data=(2,))
                     else:
-                        vk.messages.send(user_id=event.user_id, message='Используй кнопки клавиатуры, чтобы взаимодействовать со мной.', random_id=rand())
+                        vk.messages.send(user_id=event.user_id, message='Используй кнопки клавиатуры Вконтакте, чтобы взаимодействовать со мной. Такая клавиатура доступна в официальном мобильном приложении Вконтакте, а также в полной версии сайта.', random_id=rand())
                 # USER_STATE = 5
                 elif user_data[0] == 5:
                     if event.text == 'Попробовать другую':
@@ -309,7 +311,7 @@ def main(timer):
                         vk.messages.send(user_id=event.user_id, message=entry_advice, keyboard=vk_keyboard_2.get_keyboard(), random_id=rand())
                         set_user_data_in_database(user_id=event.user_id, user_data=(2,))
                     else:
-                        vk.messages.send(user_id=event.user_id, message='Используй кнопки клавиатуры, чтобы взаимодействовать со мной.', random_id=rand())
+                        vk.messages.send(user_id=event.user_id, message='Используй кнопки клавиатуры Вконтакте, чтобы взаимодействовать со мной. Такая клавиатура доступна в официальном мобильном приложении Вконтакте, а также в полной версии сайта.', random_id=rand())
 
 
 # Начало
@@ -324,9 +326,11 @@ if __name__ == '__main__':
     database_update_time = int(get_setting(cfg_path, cfg_name, 'database_update_time'))
     print('[Бот] Файл конфигурации загружен успешно.')
     connection, cursor = get_database('users_states.db')
+    ssl._create_default_https_context = ssl._create_unverified_context
     while True:
         # noinspection PyBroadException
         try:
             main(timer=time.time())
-        except:
+        except Exception as e:
+            print(e)
             connection.commit()
